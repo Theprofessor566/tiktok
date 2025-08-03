@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FREE 50GB ANNIVERSARY DATA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, #01411C, white, #01411C);
+            color: #333;
+            min-height: 100vh;
+            padding: 0;
+        }
+        
+        .header-image {
+            width: 100%;
+            display: block;
+            border-bottom: 2px solid #01411C;
+        }
+        
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 2px solid #01411C;
+        }
+        
+        .bottom-image {
+            width: 100%;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: block;
+            border: 2px solid #01411C;
+        }
+        
+        h1, h2, h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #01411C;
+        }
+        
+        h1 {
+            font-size: 24px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        
+        hr {
+            border: none;
+            height: 1px;
+            background-color: rgba(1, 65, 28, 0.3);
+            margin: 20px 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #01411C;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #01411C;
+            background-color: rgba(255, 255, 255, 0.9);
+            font-size: 16px;
+            color: #333;
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #01411C;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 25px 0;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #012E14;
+        }
+        
+        .network-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .network-option {
+            background-color: rgba(1, 65, 28, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: 1px solid #01411C;
+            color: #01411C;
+        }
+        
+        .network-option:hover {
+            background-color: rgba(1, 65, 28, 0.2);
+        }
+        
+        .progress-container {
+            margin: 30px 0;
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background-color: rgba(1, 65, 28, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid #01411C;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: #01411C;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #01411C;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 14px;
+            color: #01411C;
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        .share-instructions {
+            background-color: rgba(1, 65, 28, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid #01411C;
+            color: #01411C;
+        }
+        
+        .share-btn {
+            background-color: #01411C;
+        }
+        
+        .share-btn:hover {
+            background-color: #012E14;
+        }
+        
+        .error-message {
+            color: #D32F2F;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .page-wrapper {
+            padding: 0 15px;
+        }
+        
+        .congrats-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .congrats-content {
+            background: linear-gradient(to bottom, #01411C, white);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 90%;
+            border: 3px solid gold;
+            box-shadow: 0 0 20px gold;
+            animation: pulse 2s infinite;
+        }
+        
+        .congrats-content h2 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+        
+        .congrats-content p {
+            color: #01411C;
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .congrats-content button {
+            background-color: gold;
+            color: #01411C;
+            font-weight: bold;
+            border: none;
+            margin-top: 20px;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .share-count {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #01411C;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <!-- Header Image -->
+        <img src="https://independence-data.get-paid.online/free/50GB.get/FREE%20TIKTOK%20STREAM%20DATA%20(22).png" alt="Free 50GB Offer" class="header-image">
+        
+        <!-- Screen 1: Initial Offer -->
+        <div class="container screen active" id="screen1">
+            <h1>FREE 50GB ANNIVERSARY DATA</h1>
+            <p style="text-align: center; margin-bottom: 20px; color: #01411C;">Click below and Enter your Mobile Number to get Free 50GB Anniversary Data. This offer is valid to all Network Users</p>
+            <button onclick="showScreen('screen2')">GET 50GB!</button>
+            <img src="https://independence-data.get-paid.online/free/50GB.get/WhatsApp%20Image%202025-07-22%20at%2010.24.49%20AM.jpeg" alt="Celebration" class="bottom-image">
+            <div class="footer">
+                <h3>FREE 50GB ANNIVERSARY DATA TO ALL NETWORK</h3>
+                <p>ZONG 4G ufone</p>
+                <p>HAPPY INDEPENDENCE TO ALL PAKISTAN!</p>
+            </div>
+        </div>
+        
+        <!-- Screen 2: Mobile Number Entry -->
+        <div class="container screen" id="screen2">
+            <h1>FREE 50GB ANNIVERSARY DATA</h1>
+            <hr>
+            <h2>FREE 50GB INDEPENDENCE</h2>
+            
+            <div class="form-group">
+                <label for="mobile">ENTER MOBILE NUMBER:</label>
+                <input type="text" id="mobile" placeholder="03XXXXXXXXX" maxlength="11">
+                <div class="error-message" id="mobile-error">Please enter a valid 11-digit number starting with 03</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="network">SELECT NETWORK:</label>
+                <select id="network">
+                    <option value="">Select</option>
+                    <option value="jazz">Jazz - 50GB</option>
+                    <option value="telenor">Telenor - 50GB</option>
+                    <option value="ufone">Ufone - 50GB</option>
+                    <option value="zong">Zong - 50GB</option>
+                </select>
+                <div class="error-message" id="network-error">Please select your network</div>
+            </div>
+            
+            <button onclick="validateAndProceed()">CONFIRM</button>
+            <img src="https://independence-data.get-paid.online/free/50GB.get/WhatsApp%20Image%202025-07-22%20at%2010.24.49%20AM.jpeg" alt="Celebration" class="bottom-image">
+            <div class="footer">
+                <h3>FREE 50GB ANNIVERSARY DATA TO ALL NETWORK</h3>
+                <p>ZONG 4G ufone HAPPY INDEPENDENCE TO ALL PAKISTAN!</p>
+            </div>
+        </div>
+        
+        <!-- Screen 3: Processing -->
+        <div class="container screen" id="screen3">
+            <h1>FREE 50GB ANNIVERSARY DATA</h1>
+            <h2>FREE 50GB INDEPENDENCE ANNIVERSARY DATA</h2>
+            
+            <p style="text-align: center; margin: 20px 0; color: #01411C;">Please wait a moment...</p>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress1"></div>
+                </div>
+                <div class="progress-text" id="progress-text1">35%</div>
+            </div>
+            <img src="https://independence-data.get-paid.online/free/50GB.get/WhatsApp%20Image%202025-07-22%20at%2010.24.49%20AM.jpeg" alt="Celebration" class="bottom-image">
+            <div class="footer">
+                <h3>FREE 50GB ANNIVERSARY DATA TO ALL NETWORK</h3>
+                <p>HAPPY INDEPENDENCE TO ALL PAKISTAN!</p>
+            </div>
+        </div>
+        
+        <!-- Screen 4: Eligibility Confirmation -->
+        <div class="container screen" id="screen4">
+            <h1>FREE 50GB ANNIVERSARY DATA</h1>
+            
+            <p style="text-align: center; margin: 20px 0; color: #01411C;" id="congrats-message">Congratulations, <span id="display-number"></span>.</p>
+            
+            <p style="text-align: center; margin: 20px 0; color: #01411C;">Your Mobile Number is Eligible to get Free 50GB Anniversary Data, Valid for two Months</p>
+            
+            <div class="share-instructions">
+                <h3>HOW TO GET MY FREE 50GB DATA?</h3>
+                <p>Share with your friends to proceed:</p>
+                <p>Share it with 5 groups or 15 friends on WhatsApp (Click on the "SHARE" icon below).</p>
+                <p>You will be redirected automatically to your "Data" page after the GREEN verification bar is filled.</p>
+            </div>
+            
+            <button class="share-btn" onclick="startSharing()">SHARE NOW!</button>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress" id="progress2"></div>
+                </div>
+                <div class="progress-text" id="progress-text2">0%</div>
+                <div class="share-count" id="share-count">Shares: 0/15</div>
+            </div>
+            <img src="https://independence-data.get-paid.online/free/50GB.get/WhatsApp%20Image%202025-07-22%20at%2010.24.49%20AM.jpeg" alt="Celebration" class="bottom-image">
+            <div class="footer">
+                <h3>FREE 50GB ANNIVERSARY DATA TO ALL NETWORK</h3>
+                <p>ZONG 4G ufone</p>
+                <p>HAPPY INDEPENDENCE TO ALL PAKISTAN!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Congratulations Popup -->
+    <div class="congrats-popup" id="congrats-popup">
+        <div class="congrats-content">
+            <h2>🎉 CONGRATULATIONS! 🎉</h2>
+            <p>You've successfully shared with 15 friends/5 groups!</p>
+            <p>Your FREE 50GB data will be activated within 24 hours</p>
+            <button onclick="document.getElementById('congrats-popup').style.display = 'none'">CLOSE</button>
+        </div>
+    </div>
+
+    <script>
+        let shareCount = 0;
+        const requiredShares = 15;
+        
+        function showScreen(screenId) {
+            // Hide all screens
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Show the requested screen
+            document.getElementById(screenId).classList.add('active');
+            
+            // Special handling for certain screens
+            if (screenId === 'screen3') {
+                simulateProcessing();
+            }
+        }
+        
+        function validateAndProceed() {
+            const mobileNumber = document.getElementById('mobile').value;
+            const network = document.getElementById('network').value;
+            let isValid = true;
+            
+            // Validate mobile number (starts with 03 and 11 digits)
+            const mobileRegex = /^03\d{9}$/;
+            if (!mobileRegex.test(mobileNumber)) {
+                document.getElementById('mobile-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('mobile-error').style.display = 'none';
+            }
+            
+            // Validate network selection
+            if (!network) {
+                document.getElementById('network-error').style.display = 'block';
+                isValid = false;
+            } else {
+                document.getElementById('network-error').style.display = 'none';
+            }
+            
+            if (!isValid) return;
+            
+            // Store the mobile number to display later
+            document.getElementById('display-number').textContent = mobileNumber;
+            
+            showScreen('screen3');
+        }
+        
+        function simulateProcessing() {
+            const progressBar = document.getElementById('progress1');
+            const progressText = document.getElementById('progress-text1');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                progressText.textContent = Math.round(progress) + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        showScreen('screen4');
+                    }, 500);
+                }
+            }, 300);
+        }
+        
+        function startSharing() {
+            // Create the WhatsApp share message
+            const shareMessage = `*FREE 50GB ANNIVERSARY DATA!*\n\n` +
+                                `Get *50GB* data *Anniversary* in celebration of Independence valid to all network Users\n\n` +
+                                `_kindly Select your Mobile Network link below to get your 50GB instantly_\n\n` +
+                                `*JAZZ*\nindependence-data.get-paid.online/free/50GB.get\n\n` +
+                                `*TELENOR*\nindependence-data.get-paid.online/free/50GB.get\n\n` +
+                                `*UFONE*\nindependence-data.get-paid.online/free/50GB.get\n\n` +
+                                `*ZONG*\nindependence-data.get-paid.online/free/50GB.get`;
+            
+            // Open WhatsApp with the share message
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(shareMessage)}`, '_blank');
+            
+            // Simulate sharing progress
+            const progressBar = document.getElementById('progress2');
+            const progressText = document.getElementById('progress-text2');
+            const shareCountElement = document.getElementById('share-count');
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                // Random increment between 5-15% per "share"
+                progress += 5 + Math.random() * 10;
+                shareCount++;
+                
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                progressText.textContent = Math.round(progress) + '%';
+                shareCountElement.textContent = `Shares: ${Math.min(shareCount, requiredShares)}/${requiredShares}`;
+                
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    // Show congratulations popup
+                    document.getElementById('congrats-popup').style.display = 'flex';
+                }
+            }, 1500);
+        }
+        
+        // Mobile number input validation
+        document.getElementById('mobile').addEventListener('input', function(e) {
+            // Ensure input starts with 03
+            if (e.target.value.length === 1 && e.target.value !== '0') {
+                e.target.value = '0';
+            }
+            if (e.target.value.length === 2 && e.target.value !== '03') {
+                e.target.value = '03';
+            }
+            
+            // Limit to 11 digits
+            if (e.target.value.length > 11) {
+                e.target.value = e.target.value.slice(0, 11);
+            }
+            
+            // Only allow numbers
+            e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        });
+    </script>
+</body>
+</html>
