@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicious Shami Kabab - Homemade & Healthy</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e67e22;
+            --secondary: #d35400;
+            --light: #fdf2e9;
+            --dark: #2c3e50;
+            --success: #27ae60;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Page transitions */
+        .page {
+            position: absolute;
+            width: calc(100% - 40px);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+
+        .page.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        /* Home Page */
+        .hero {
+            text-align: center;
+            margin: 30px 0 40px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: var(--dark);
+            animation: fadeIn 1.5s ease;
+        }
+
+        .hero-img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin: 20px auto;
+            animation: scaleIn 1s ease;
+            transition: transform 0.3s;
+        }
+
+        .hero-img:hover {
+            transform: scale(1.02);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
+            animation: pulse 2s infinite;
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 126, 34, 0.6);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+
+        .reviews-section {
+            margin: 50px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+
+        .reviews {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .review-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .review-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .review-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .review-stars {
+            color: #f1c40f;
+            font-size: 0.9rem;
+        }
+
+        /* Product Page */
+        .product-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 350px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .product-image:hover {
+            transform: scale(1.03);
+        }
+
+        .product-details {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 20px;
+        }
+
+        .product-description {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        /* Checkout Page */
+        .checkout-container {
+            max-width: 500px;
+            margin: 30px auto;
+        }
+
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .quantity-label {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quantity-btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .quantity-value {
+            margin: 0 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .customer-form {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.2);
+        }
+
+        .order-summary {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-top: 30px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        .place-order-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4);
+        }
+
+        .place-order-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(230, 126, 34, 0.6);
+        }
+
+        /* Order Success Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background-color: white;
+            width: 90%;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transform: scale(0.8);
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+            animation: bounce 1s;
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--success);
+        }
+
+        .modal-text {
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .order-id {
+            font-weight: 700;
+            color: var(--dark);
+            background-color: #f1f1f1;
+            padding: 5px 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-btn {
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .modal-btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .modal-btn-primary:hover {
+            background-color: var(--secondary);
+        }
+
+        .modal-btn-whatsapp {
+            background-color: #25D366;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(230, 126, 34, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(230, 126, 34, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(230, 126, 34, 0);
+            }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-30px);
+            }
+            60% {
+                transform: translateY(-15px);
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 50px;
+            color: var(--dark);
+            font-size: 0.9rem;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>Shami Kabab</span>
+            </div>
+            <div class="nav-links">
+                <a href="#" class="nav-link" data-page="home">Home</a>
+                <a href="#" class="nav-link" data-page="order">Order</a>
+            </div>
+        </nav>
+
+        <!-- Home Page -->
+        <div class="page active" id="home-page">
+            <section class="hero">
+                <h1>Homemade Shami Kabab</h1>
+                <p>Delicious, healthy, and perfect for breakfast or sehri</p>
+                <img src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Shami Kabab" class="hero-img">
+                <a href="#" class="cta-button nav-link" data-page="order">Order Now</a>
+            </section>
+
+            <section class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Homemade</h3>
+                    <p>Prepared with love in our home kitchen using traditional recipes</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3>Healthy</h3>
+                    <p>Made with fresh ingredients and minimal oil for a healthier option</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Quick Delivery</h3>
+                    <p>Freshly prepared and delivered to your doorstep in no time</p>
+                </div>
+            </section>
+
+            <section class="reviews-section">
+                <h2 class="section-title">Customer Reviews</h2>
+                <div class="reviews">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">A</div>
+                            <div>
+                                <div class="review-name">Ali Khan</div>
+                                <div class="review-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p>"The best shami kabab I've ever had! Perfectly spiced and so flavorful. My whole family loves them for sehri."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">S</div>
+                            <div>
+                                <div class="review-name">Sara Ahmed</div>
+                                <div class="review-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p>"These kababs are amazing! So tender and juicy. I order them every week for breakfast. Highly recommended!"</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <div class="review-avatar">M</div>
+                            <div>
+                                <div class="review-name">Mohammad Bilal</div>
+                                <div class="review-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p>"Authentic taste just like my grandmother used to make. The perfect balance of spices. Will definitely order again!"</p>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="https://wa.me/923009043445" class="social-link"><i class="fab fa-whatsapp"></i></a>
+                </div>
+                <p>© 2023 Homemade Shami Kabab. All rights reserved.</p>
+                <p>Cash on delivery only</p>
+            </footer>
+        </div>
+
+        <!-- Order Page -->
+        <div class="page" id="order-page">
+            <div class="product-container">
+                <img src="https://i.ibb.co/pBQFC5JQ/IMG-20250812-WA0008.jpg" alt="Shami Kabab" class="product-image">
+                <div class="product-details">
+                    <h1 class="product-title">Shami Kabab</h1>
+                    <p class="product-price">250 PKR per pack (6 pieces)</p>
+                    <p class="product-description">
+                        Our homemade Shami Kabab is made with the finest quality meat and traditional spices. 
+                        Each pack contains 6 perfectly cooked kababs that are crispy on the outside and juicy on the inside. 
+                        Ideal for breakfast, sehri, or any time you crave authentic Pakistani flavors.
+                    </p>
+                    <div class="action-buttons">
+                        <a href="https://wa.me/923009043445?text=Hi%20there!%20%F0%9F%8D%97%20I'm%20interested%20in%20your%20delicious%20Shami%20Kababs.%20Can%20you%20tell%20me%20more%20about%20them%3F%20%F0%9F%98%8B" class="btn btn-whatsapp">
+                            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                        </a>
+                        <a href="#" class="btn btn-primary nav-link" data-page="checkout">
+                            <i class="fas fa-shopping-cart"></i> Order Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Checkout Page -->
+        <div class="page" id="checkout-page">
+            <div class="checkout-container">
+                <div class="quantity-selector">
+                    <span class="quantity-label">Quantity:</span>
+                    <div class="quantity-controls">
+                        <button class="quantity-btn" id="decrease-qty">-</button>
+                        <span class="quantity-value" id="quantity">1</span>
+                        <button class="quantity-btn" id="increase-qty">+</button>
+                    </div>
+                </div>
+
+                <div class="customer-form">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Full Name</label>
+                        <input type="text" id="name" class="form-input" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="form-label">Delivery Address</label>
+                        <input type="text" id="address" class="form-input" placeholder="Enter your complete address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="instructions" class="form-label">Special Instructions (Optional)</label>
+                        <input type="text" id="instructions" class="form-input" placeholder="Any special delivery instructions">
+                    </div>
+                </div>
+
+                <div class="order-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Shami Kabab (6 pieces)</span>
+                        <span>250 PKR</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Quantity</span>
+                        <span id="summary-quantity">1</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="total">Total</span>
+                        <span class="total" id="total-price">250 PKR</span>
+                    </div>
+                </div>
+
+                <button class="place-order-btn" id="place-order">Place Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Order Success Modal -->
+    <div class="modal-overlay" id="success-modal">
+        <div class="modal">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="modal-title">Order Placed!</h2>
+            <p class="modal-text">Your order has been placed successfully. We'll prepare it with care and deliver it to you soon.</p>
+            <div class="order-id" id="order-id">Order #SHK2023</div>
+            <div class="modal-buttons">
+                <a href="#" class="modal-btn modal-btn-primary" id="back-to-home">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+                <a href="#" class="modal-btn modal-btn-whatsapp" id="whatsapp-contact">
+                    <i class="fab fa-whatsapp"></i> Contact on WhatsApp
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Page Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page');
+                showPage(pageId);
+                
+                // Scroll to top when changing pages
+                window.scrollTo(0, 0);
+            });
+        });
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            document.getElementById(`${pageId}-page`).classList.add('active');
+        }
+
+        // Quantity Controls
+        let quantity = 1;
+        const quantityElement = document.getElementById('quantity');
+        const summaryQuantityElement = document.getElementById('summary-quantity');
+        const totalPriceElement = document.getElementById('total-price');
+        const decreaseBtn = document.getElementById('decrease-qty');
+        const increaseBtn = document.getElementById('increase-qty');
+
+        function updateQuantity() {
+            quantityElement.textContent = quantity;
+            summaryQuantityElement.textContent = quantity;
+            totalPriceElement.textContent = `${quantity * 250} PKR`;
+            
+            // Disable decrease button when quantity is 1
+            decreaseBtn.disabled = quantity === 1;
+        }
+
+        decreaseBtn.addEventListener('click', () => {
+            if (quantity > 1) {
+                quantity--;
+                updateQuantity();
+            }
+        });
+
+        increaseBtn.addEventListener('click', () => {
+            quantity++;
+            updateQuantity();
+        });
+
+        // Place Order
+        const placeOrderBtn = document.getElementById('place-order');
+        const successModal = document.getElementById('success-modal');
+        const orderIdElement = document.getElementById('order-id');
+        const backToHomeBtn = document.getElementById('back-to-home');
+        const whatsappContactBtn = document.getElementById('whatsapp-contact');
+
+        placeOrderBtn.addEventListener('click', () => {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            
+            // Simple validation
+            if (!name || !phone || !address) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // Generate random order ID
+            const randomId = Math.floor(1000 + Math.random() * 9000);
+            orderIdElement.textContent = `Order #SHK${randomId}`;
+            
+            // Show success modal
+            successModal.classList.add('active');
+            
+            // Set WhatsApp message with emojis and formatted text
+            const whatsappMessage = `🌟 *NEW ORDER NOTIFICATION* 🌟\n\nThank you for your order! *${quantity} pack(s)* of our delicious Shami Kabab 🍖\n\n📦 *Order ID*: SHK${randomId}\n👤 *Name*: ${name}\n📱 *Phone*: ${phone}\n🏠 *Address*: ${address}\n\n💬 *Special Instructions*: ${document.getElementById('instructions').value || 'None'}\n💰 *Total Amount*: ${quantity * 250} PKR\n\nWe'll prepare your order with love ❤️ and deliver it soon! If you have any questions, feel free to message us. 😊`;
+            whatsappContactBtn.href = `https://wa.me/923009043445?text=${encodeURIComponent(whatsappMessage)}`;
+        });
+
+        // Close modal and go home
+        backToHomeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            successModal.classList.remove('active');
+            showPage('home');
+            
+            // Reset form
+            quantity = 1;
+            updateQuantity();
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('address').value = '';
+            document.getElementById('instructions').value = '';
+        });
+
+        // Initialize
+        updateQuantity();
+    </script>
+</body>
+</html>
