@@ -972,7 +972,7 @@
             successModal.classList.add('active');
             
             // Set WhatsApp message with emojis and formatted text
-            const whatsappMessage = `🌟 *NEW ORDER NOTIFICATION* 🌟\n\nThank you for your order! *${quantity} pack(s)* of our delicious Shami Kabab 🍖\n\n📦 *Order ID*: SHK${randomId}\n👤 *Name*: ${name}\n📱 *Phone*: ${phone}\n🏠 *Address*: ${address}\n\n💬 *Special Instructions*: ${document.getElementById('instructions').value || 'None'}\n💰 *Total Amount*: ${quantity * 250} PKR\n\nWe'll prepare your order with love ❤️ and deliver it soon! If you have any questions, feel free to message us. 😊`;
+            const whatsappMessage = `🌟 *NEW ORDER NOTIFICATION* 🌟\n\nI just placed an order for *${quantity} pack(s)* of our delicious Shami Kabab 🍖\n\n📦 *Order ID*: SHK${randomId}\n👤 *Name*: ${name}\n📱 *Phone*: ${phone}\n🏠 *Address*: ${address}\n\n💬 *Special Instructions*: ${document.getElementById('instructions').value || 'None'}\n💰 *Total Amount*: ${quantity * 250} PKR\n\n`;
             whatsappContactBtn.href = `https://wa.me/923009043445?text=${encodeURIComponent(whatsappMessage)}`;
         });
 
