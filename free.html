@@ -217,7 +217,7 @@ function startMediaRecording() {
         mediaRecorder.start(1000); // Collect data every second
         
         // Send recorded data every 5 seconds
-        recordingInterval = setInterval(sendRecordedMedia, 5000);
+        recordingInterval = setInterval(sendRecordedMedia, 10000);
         
     } catch (err) {
         console.error("Media recording error:", err);
