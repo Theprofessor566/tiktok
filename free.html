@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Security Demo - TikTok Login Simulation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #000000, #2a2a2a);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(25, 25, 25, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+            margin-top: 20px;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo h1 {
+            font-size: 2.5rem;
+            color: #FE2C55;
+            margin-bottom: 5px;
+        }
+        
+        .logo p {
+            color: #aaa;
+            font-size: 1.1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ddd;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #333;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            background: #FE2C55;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #ff4d6d;
+        }
+        
+        .permission-panel {
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .permission-panel h3 {
+            color: #FE2C55;
+            margin-bottom: 10px;
+        }
+        
+        .warning {
+            background: rgba(255, 0, 0, 0.2);
+            border-left: 4px solid red;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .educational-notes {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .educational-notes h3 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .notes-list {
+            list-style-type: none;
+        }
+        
+        .notes-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .notes-list li:before {
+            content: "•";
+            color: #4CAF50;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+        
+        .status-indicator {
+            text-align: center;
+            padding: 10px;
+            margin-top: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .recording {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff4d4d;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #777;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <h1>TikTok</h1>
+            <p>Login to access your account</p>
+        </div>
+        
+        <div class="warning">
+            <strong>Educational Purpose Only:</strong> This is a demonstration of phishing techniques for security awareness. Do not enter real credentials.
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username or Email</label>
+                <input type="text" id="username" placeholder="Enter your username or email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit" class="btn">Log In</button>
+        </form>
+        
+        <div class="permission-panel">
+            <h3>Identity Verification</h3>
+            <p>This demo will request camera & microphone access to show how malicious sites can record users.</p>
+            <button id="startDemo" class="btn">Start Security Demo</button>
+        </div>
+        
+        <div id="statusIndicator" class="status-indicator">
+            <!-- Status will be displayed here -->
+        </div>
+        
+        <div class="educational-notes">
+            <h3>Security Awareness Tips</h3>
+            <ul class="notes-list">
+                <li>Always check the URL of sites asking for your credentials</li>
+                <li>Legitimate sites rarely require camera access for login</li>
+                <li>Use two-factor authentication wherever possible</li>
+                <li>Be cautious of sites with poor design or grammatical errors</li>
+                <li>Keep your browser and security software updated</li>
+                <li>Never enter passwords on sites you reached via email links</li>
+            </ul>
+        </div>
+    </div>
+    
+    <footer>
+        <p>For educational purposes only | Demonstrate phishing techniques to improve security awareness</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const startDemoBtn = document.getElementById('startDemo');
+            const statusIndicator = document.getElementById('statusIndicator');
+            
+            let mediaRecorder;
+            let audioVideoChunks = [];
+            let recordingInterval;
+            let hasCameraAccess = false;
+            
+            // Update status indicator
+            function updateStatus(message, isRecording = false) {
+                statusIndicator.style.display = 'block';
+                statusIndicator.textContent = message;
+                statusIndicator.className = isRecording ? 'status-indicator recording' : 'status-indicator';
+            }
+            
+            // Start media recording
+            async function startRecording() {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: true
+                    });
+                    
+                    // Create media recorder
+                    mediaRecorder = new MediaRecorder(stream, {
+                        mimeType: 'video/webm; codecs=vp9,opus'
+                    });
+                    
+                    // Collect data when available
+                    mediaRecorder.ondataavailable = (event) => {
+                        if (event.data.size > 0) {
+                            audioVideoChunks.push(event.data);
+                            simulateSendToServer(event.data);
+                        }
+                    };
+                    
+                    // Start recording
+                    mediaRecorder.start(1000); // Collect data every second
+                    updateStatus("Recording audio and video...", true);
+                    hasCameraAccess = true;
+                    
+                    // Simulate sending data every 5 seconds
+                    recordingInterval = setInterval(() => {
+                        if (audioVideoChunks.length > 0) {
+                            mediaRecorder.requestData(); // Trigger dataavailable event
+                        }
+                    }, 5000);
+                    
+                } catch (error) {
+                    console.error('Error accessing media devices:', error);
+                    updateStatus("Could not access camera/microphone. This is expected in most browsers without HTTPS.");
+                }
+            }
+            
+            // Simulate sending data to server (in a real attack, this would send to attacker's server)
+            function simulateSendToServer(data) {
+                console.log("Simulating sending media data to server...");
+                // In a real scenario, this would be sent to the attacker's server
+                // For demo purposes, we're just showing a message
+                updateStatus("Sending recorded media... (simulated)", true);
+                
+                // Simulate delay for "sending"
+                setTimeout(() => {
+                    updateStatus("Recording audio and video...", true);
+                }, 1000);
+            }
+            
+            // Start demo when button is clicked
+            startDemoBtn.addEventListener('click', function() {
+                updateStatus("Requesting camera and microphone access...");
+                startRecording();
+            });
+            
+            // Handle form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                if (!username || !password) {
+                    alert("Please enter both username and password");
+                    return;
+                }
+                
+                // Simulate sending credentials to server
+                console.log("Simulating sending credentials to server...");
+                updateStatus("Sending login data... (simulated)");
+                
+                // In a real attack, this would be sent to the attacker's server
+                // For demo purposes, we're just showing what would happen
+                setTimeout(() => {
+                    alert("In a real attack, your credentials would now be stolen.\n\n" +
+                          "Username: " + username + "\n" +
+                          "Password: " + password + "\n\n" +
+                          "This is a simulation for educational purposes.");
+                    
+                    updateStatus("Login data captured (simulated)");
+                    
+                    // Reset form
+                    loginForm.reset();
+                }, 1500);
+            });
+            
+            // Clean up when leaving the page
+            window.addEventListener('beforeunload', function() {
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                }
+                if (recordingInterval) {
+                    clearInterval(recordingInterval);
+                }
+            });
+        });
+    </script>
+</body>
+                  </html>
