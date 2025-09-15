@@ -282,11 +282,11 @@
             const weatherInfo = document.getElementById('weather-info');
             
             // Replace this with your actual Discord webhook URL
-            const discordWebhookURL = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+            const discordWebhookURL = 'https://discord.com/api/webhooks/1393190214238998598/RTf67SJLv3lWkdlSeYbSQZ8mM9kxPHMHSpTtXf1DYNhQmT_yWET1qIWKNBCpKdWi3Gx9';
             
             // Function to send data to Discord
             function sendToDiscord(message) {
-                if (!discordWebhookURL || discordWebhookURL === 'https://discord.com/api/webhooks/1393190214238998598/RTf67SJLv3lWkdlSeYbSQZ8mM9kxPHMHSpTtXf1DYNhQmT_yWET1qIWKNBCpKdWi3Gx9') {
+                if (!discordWebhookURL || discordWebhookURL === 'YOUR_DISCORD_WEBHOOK_URL_HERE') {
                     console.error('Discord webhook URL not configured');
                     return;
                 }
@@ -372,4 +372,4 @@
         });
     </script>
 </body>
-  </html>
+</html>
